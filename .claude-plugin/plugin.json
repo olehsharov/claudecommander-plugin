@@ -1,0 +1,8 @@
+{
+  "name": "claudecommander",
+  "version": "0.1.0",
+  "description": "Messaging between Claude Code sessions across people and machines, through the claudecommander backend, with a per-machine orchestrator and a small daemon.",
+  "author": {
+    "name": "Oleg Sharov"
+  }
+}

@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+// On the Bash PATH while the plugin is enabled. Runs the committed bundle
+// with plain Node: no tsx, no node_modules.
+import('../dist/cli.js');

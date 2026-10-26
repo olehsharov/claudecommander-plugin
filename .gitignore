@@ -1,0 +1,6 @@
+# Installed packages and files the package generates locally.
+node_modules/
+coverage/
+*.log
+.DS_Store
+# dist/ is NOT ignored: dist/cli.js is committed and ships to users as-is.

@@ -1,0 +1,14 @@
+{
+  "name": "claudecommander",
+  "description": "Claude Commander: lets the Claude Code sessions of colleagues send messages to each other across people and machines.",
+  "owner": {
+    "name": "Oleg Sharov"
+  },
+  "plugins": [
+    {
+      "name": "claudecommander",
+      "source": "./",
+      "description": "Messaging between Claude Code sessions across people and machines, through the claudecommander backend, with a per-machine orchestrator and a small daemon."
+    }
+  ]
+}

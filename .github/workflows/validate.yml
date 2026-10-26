@@ -1,0 +1,46 @@
+# Checks the plugin repository on every pull request and on pushes to main:
+# the tests pass, the code typechecks, and Claude Code accepts the
+# marketplace, the plugin and its .mcp.json. `--strict` turns validator
+# warnings into failures, because the plugin loader silently drops a
+# malformed MCP server instead of failing the install.
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# The job only reads the code; its token gets no write access.
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      # Actions are pinned to full commit SHAs; dependabot.yml proposes updates.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Pinned to the Claude Code version the plugin was validated against.
+      # Bump it on purpose, in its own pull request, after checking that the
+      # newer validator still passes. Installed before the tests so the test
+      # that runs the real validator does not skip here.
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code@2.1.301
+
+      - name: Run tests
+        run: npm test
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Validate the marketplace and plugin
+        run: claude plugin validate . --strict
